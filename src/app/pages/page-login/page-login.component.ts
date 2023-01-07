@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppRoutingModule } from 'src/app/app-routing.module';
 import { Login } from 'src/app/models/login';
 
 @Component({
@@ -11,22 +10,35 @@ import { Login } from 'src/app/models/login';
 })
 export class PageLoginComponent implements OnInit  {
 
-  private formCLogin: FormGroup | undefined;
+  public formLogin!: FormGroup;
+  public isValid: boolean = true;
 
   constructor(private router: Router) { }
-  
+
   ngOnInit(): void {
     this.createForm(new Login());
   }
 
   createForm(login: Login): void {
-    this.formCLogin = new FormGroup({
+    this.isValid = true;
+    this.formLogin = new FormGroup({
       usuario: new FormControl({ value: login.usuario, disabled: false }, [Validators.maxLength(30), Validators.required]),
       senha: new FormControl({ value: login.senha, disabled: false }, [Validators.maxLength(30), Validators.required])
     });
   }
 
   doLogin(): void {
+    console.log('Executou login! ' + this.formLogin.value);
+    if(this.formLogin.valid) {
+      this.callService() ;
+    }
+    else {
+      this.isValid = false;
+      console.log('Formulario invalido!');
+    }
+  }
+
+  callService(): void {
     this.router.navigateByUrl('lista-ordem-servico');
   }
 }

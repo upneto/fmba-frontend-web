@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularMaterialModule } from './angular-material.module';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 /** Componentes */
 import { AppComponent } from './app.component';
@@ -34,8 +34,7 @@ import { PageListaOrdemServicoComponent } from './pages/page-lista-ordem-servico
     BrowserModule,
     AngularMaterialModule,
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule    
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
