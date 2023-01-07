@@ -1,8 +1,9 @@
 {
   "name": "fmba-frontend-web",
-  "version": "0.0.0",
+  "version": "0.0.1-SNAPSHOT",
   "scripts": {
     "ng": "ng",
+    "open": "ng serve --open",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
@@ -11,13 +12,16 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^15.0.0",
+    "@angular/cdk": "^15.0.3",
     "@angular/common": "^15.0.0",
     "@angular/compiler": "^15.0.0",
     "@angular/core": "^15.0.0",
     "@angular/forms": "^15.0.0",
+    "@angular/material": "^15.0.3",
     "@angular/platform-browser": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
+    "flex-layout": "^1.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

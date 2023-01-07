@@ -1,0 +1,14 @@
+mat-toolbar {
+    position: fixed;
+    bottom: 0;
+    margin-top: 25px;
+    font-size: 2ex;        
+    background-color: rgb(66, 66, 66);
+    color: #fff;
+    border-top: 10px solid #666;            
+}
+
+.footer-label {
+    width: 100%;
+    text-align: center;
+}
