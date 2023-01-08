@@ -8,6 +8,15 @@
   margin: auto;
 }
 
+.app-filter {
+  width: 80%;
+  margin: auto;
+}
+
+.input-filter {
+  min-width: 200px;
+}
+
 .button-nova-ordem {
   float: right;
   margin-top: 10px;

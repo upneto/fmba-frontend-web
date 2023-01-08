@@ -1,11 +1,21 @@
 <div layout="row">
   <div flex class="app-buttons">
-    <a mat-flat-button routerLink="/lista-ordem-servico" >Lista de Ordens de Serviços</a>
-    <button mat-stroked-button color="warn" class="button-nova-ordem" (click)="incluirNovo();" >Nova Ordem de Serviço</button>
+    <a mat-flat-button routerLink="/lista-ordem-servico">Lista de Ordens de Serviços</a>
+  </div>
+
+  <div flex class="app-filter" >
+    <!-- Filtro -->
+    <mat-form-field [style.width.px]="400" >
+      <mat-label>Filtro</mat-label>
+      <input matInput placeholder="Filtro" #input class="input-filter" (keyup)="applyFilter($event);" />
+    </mat-form-field>
+
+    <!-- Botao navegação nova ordem de serviço -->
+    <button mat-stroked-button color="warn" class="button-nova-ordem" (click)="incluirNovo();">Nova Ordem de Serviço</button>
   </div>
 
   <div flex class="app-table">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
       <!-- Código -->
       <ng-container matColumnDef="codigo">
@@ -32,9 +42,10 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="detalhar(row);" ></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="detalhar(row);"></tr>
     </table>
 
+    <!-- Componente de paginação -->
     <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons aria-label="Selecione Quantidade"></mat-paginator>
   </div>
 </div>

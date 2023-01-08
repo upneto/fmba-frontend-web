@@ -21,6 +21,7 @@ import { PageListaOrdemServicoComponent } from './pages/page-lista-ordem-servico
 import { AlertComponent } from './components/alert/alert.component';
 import { AlertService } from './services/alert/alert-service';
 import { StateService } from './services/state/state-service';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { StateService } from './services/state/state-service';
     BrowserModule,
     AngularMaterialModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [ AlertService, StateService ],
   bootstrap: [AppComponent],
