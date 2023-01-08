@@ -1,10 +1,82 @@
-<div layout="row">
-  <div flex class="app-buttons">
-    <a mat-flat-button routerLink="/lista-ordem-servico" >Lista de Ordens de Serviços</a>
-    /
-    <a mat-flat-button routerLink="/detalhe-ordem-servico" >Detalhe Ordem de Serviço</a>
+<div class="container">
+  <div class="row">
+    <div class="column">
+      <a mat-flat-button routerLink="/lista-ordem-servico">Lista de Ordens de Serviços</a>
+      /
+      <a mat-flat-button routerLink="/detalhe-ordem-servico">Detalhe Ordem de Serviço</a>
+    </div>
   </div>
 
+  <div class="row">
+    <form class="form" fxLayout="column" [formGroup]="formOrdemServico">
+
+      <div class="row border bg-light">
+        <!-- codigo -->
+        <div class="col-6">
+          <mat-form-field>
+            <label>Número Ordem de Serviço</label>
+            <input class="form-control" matInput placeholder="Número Ordem Serviço" formControlName="codigo" readonly />
+          </mat-form-field>
+        </div>
+        <div class="col-6"></div>
+
+        <!-- Data Inicio -->
+        <div class="col-6">
+          <mat-form-field appearance="fill" >
+            <label>Data Início do Serviço</label>
+            <input matInput [matDatepicker]="dataInicio" placeholder="Data Início" formControlName="dataInicio" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="dataInicio"></mat-datepicker-toggle>
+            <mat-datepicker #dataInicio></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <!-- Data Final -->
+        <div class="col-6" appearance="fill" >
+          <mat-form-field>
+            <label>Data Final do Serviço</label>
+            <input matInput [matDatepicker]="dataFinal" placeholder="Data Final" formControlName="dataFinal" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="dataFinal"></mat-datepicker-toggle>
+            <mat-datepicker #dataFinal></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <br />
+
+      <!-- Cliente -->
+      <div class="row border bg-light">
+        <mat-form-field>
+          <label>Cliente</label>
+          <input matInput placeholder="Cliente" formControlName="idCliente" />
+        </mat-form-field>
+      </div>
+
+      <br />
+
+      <!-- Veiculo -->
+      <div class="row border bg-light">
+        <mat-form-field>
+          <label>Veículo</label>
+          <input matInput placeholder="Veiculo" formControlName="idVeiculo" />
+        </mat-form-field>
+      </div>
+
+      <br />
+
+      <!-- Acoes -->
+      <div class="row">
+        <div class="col-6">
+          <button mat-stroked-button color="primary" class="float-left" routerLink="/lista-ordem-servico" >Voltar</button>
+        </div>
+
+        <div class="col-6">
+          <button mat-flat-button color="primary" class="float-right">Gravar Nova Ordem se Serviço</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
 
 </div>
-

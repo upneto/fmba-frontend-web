@@ -17,10 +17,10 @@ export class PageLoginComponent implements OnInit  {
   constructor(private router: Router, private alert: AlertService) { }
 
   ngOnInit(): void {
-    this.createForm(new Login());
+    this.buildForm(new Login());
   }
 
-  createForm(login: Login): void {
+  buildForm(login: Login): void {
     this.isValid = true;
     this.formLogin = new FormGroup({
       usuario: new FormControl({ value: login.usuario, disabled: false }, [Validators.maxLength(30), Validators.required]),

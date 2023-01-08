@@ -22,6 +22,8 @@ import { AlertComponent } from './components/alert/alert.component';
 import { AlertService } from './services/alert/alert-service';
 import { StateService } from './services/state/state-service';
 import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -40,8 +42,11 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AngularMaterialModule,
     AppRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
-    FormsModule
+    NgbModule,
+
+    MatNativeDateModule
   ],
   providers: [ AlertService, StateService ],
   bootstrap: [AppComponent],
