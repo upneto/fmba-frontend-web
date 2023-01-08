@@ -10,11 +10,9 @@ import { CustomHttpClient } from "../../custom-http-client";
 })
 export class LoginApiService {
 
-  private urlBase!: string;
+  private urlBase = `${environment.api.login}`;
 
-  constructor(private httpClient: CustomHttpClient) {
-    this.urlBase = `${environment.api.login}`;
-  }
+  constructor(private httpClient: CustomHttpClient) {}
 
   doLogin(logon: Login): Observable<ResponseApp> {
     return this.httpClient.post(`${this.urlBase}`, logon);

@@ -27,6 +27,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatNativeDateModule} from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { HttpClientModule } from '@angular/common/http';
+import { CustomHttpClient } from './services/custom-http-client';
 
 
 @NgModule({
@@ -43,6 +45,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    HttpClientModule,
     AngularMaterialModule,
     AppRoutingModule,
     FormsModule,
@@ -53,7 +56,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MatSelectModule,
     NgxMatSelectSearchModule
   ],
-  providers: [ AlertService, StateService ],
+  providers: [ AlertService, StateService, CustomHttpClient ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

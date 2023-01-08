@@ -14,9 +14,13 @@ export class CustomHttpClient {
    * @param paginacao variavel de controle da paginação
    */
   get(url: string): Observable<ResponseApp> {
-    let header = this.buildHeader();
+    console.log("CALL => " + url);
     return this.httpClient
-      .get<ResponseApp>(url, { headers: header })
+      .get<ResponseApp>(url, { headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': url,
+        'JWT_TOKEN': this.getStorageItem('JWT_TOKEN')
+      }})
       .pipe(catchError(this.handleError)) as Observable<ResponseApp>;
   }
 
@@ -26,9 +30,14 @@ export class CustomHttpClient {
    * @param data Conteudo/corpo da requisicao
    */
   post(url: string, data: any): Observable<ResponseApp> {
-    let header = this.buildHeader();
+    console.log("CALL => " + url);
+    console.log("DATA => " + JSON.stringify(data));
     return this.httpClient
-      .post<ResponseApp>(url, data, { headers: header })
+      .post<ResponseApp>(url, data, { headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': url,
+        'JWT_TOKEN': this.getStorageItem('JWT_TOKEN')
+      }})
       .pipe(catchError(this.handleError)) as Observable<ResponseApp>;
   }
 
@@ -38,9 +47,14 @@ export class CustomHttpClient {
    * @param data Conteudo/corpo da requisicao
    */
   put(url: string, data: any): Observable<ResponseApp> {
-    let header = this.buildHeader();
+    console.log("CALL => " + url);
+    console.log("DATA => " + JSON.stringify(data));
     return this.httpClient
-      .put<ResponseApp>(url, data, { headers: header })
+      .put<ResponseApp>(url, data, { headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': url,
+        'JWT_TOKEN': this.getStorageItem('JWT_TOKEN')
+      }})
       .pipe(catchError(this.handleError)) as Observable<ResponseApp>;
   }
 
@@ -49,9 +63,13 @@ export class CustomHttpClient {
    * @param url Endereco de acesso (endpoint)
    */
   delete(url: string): Observable<ResponseApp> {
-    let header = this.buildHeader();
+    console.log("CALL => " + url);
     return this.httpClient
-      .delete<ResponseApp>(url, { headers: header })
+      .delete<ResponseApp>(url, { headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': url,
+        'JWT_TOKEN': this.getStorageItem('JWT_TOKEN')
+      }})
       .pipe(catchError(this.handleError)) as Observable<ResponseApp>;
   }
 
@@ -74,19 +92,6 @@ export class CustomHttpClient {
    */
   setStorageItem(name: string, value: string): void {
     window.localStorage.setItem(name, value);
-  }
-
-  /**
-   * Constroi objeto header para requisição http
-   * @param paginacao variavel de controle da paginação
-   */
-  buildHeader(): HttpHeaders {
-    var tokenJWT: string = this.getStorageItem('JWT_TOKEN');
-    const header: any = [
-      { 'JWT_TOKEN': tokenJWT },
-      { 'Content-Type': 'application/json'}
-    ];
-    return new HttpHeaders(header);
   }
 
   /**
