@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Login } from 'src/app/models/login';
+import { AlertService } from 'src/app/services/alert/alert-service';
 
 @Component({
   selector: 'app-page-login',
@@ -13,7 +14,7 @@ export class PageLoginComponent implements OnInit  {
   public formLogin!: FormGroup;
   public isValid: boolean = true;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private alert: AlertService) { }
 
   ngOnInit(): void {
     this.createForm(new Login());

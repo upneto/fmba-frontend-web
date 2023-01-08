@@ -1,1 +1,40 @@
-<p>page-lista-ordem-servico works!</p>
+<div layout="row">
+  <div flex class="app-buttons">
+    <a mat-flat-button routerLink="/lista-ordem-servico" >Lista de Ordens de Serviços</a>
+    <button mat-stroked-button color="warn" class="button-nova-ordem" (click)="incluirNovo();" >Nova Ordem de Serviço</button>
+  </div>
+
+  <div flex class="app-table">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <!-- Código -->
+      <ng-container matColumnDef="codigo">
+        <th mat-header-cell *matHeaderCellDef> Nº Ordem de Serviço </th>
+        <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+      </ng-container>
+
+      <!-- Nome do Cliente -->
+      <ng-container matColumnDef="nomeCliente">
+        <th mat-header-cell *matHeaderCellDef> Nome do Cliente </th>
+        <td mat-cell *matCellDef="let element"> {{element.nomeCliente}} </td>
+      </ng-container>
+
+      <!-- Veiculo -->
+      <ng-container matColumnDef="veiculo">
+        <th mat-header-cell *matHeaderCellDef> Veiculo </th>
+        <td mat-cell *matCellDef="let element"> {{element.veiculo}} </td>
+      </ng-container>
+
+      <!-- Placa -->
+      <ng-container matColumnDef="placa">
+        <th mat-header-cell *matHeaderCellDef> Placa </th>
+        <td mat-cell *matCellDef="let element"> {{element.placa}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="detalhar(row);" ></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons aria-label="Selecione Quantidade"></mat-paginator>
+  </div>
+</div>

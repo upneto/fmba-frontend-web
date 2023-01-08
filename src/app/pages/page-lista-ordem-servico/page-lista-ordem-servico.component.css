@@ -1,0 +1,29 @@
+.app-table {
+  width: 80%;
+  margin: auto;
+}
+
+.app-buttons {
+  width: 80%;
+  margin: auto;
+}
+
+.button-nova-ordem {
+  float: right;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  background-color: #d3d3d356;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
