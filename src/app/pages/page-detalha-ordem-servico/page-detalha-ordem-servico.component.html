@@ -14,7 +14,7 @@
         <!-- codigo -->
         <div class="col-6">
           <mat-form-field>
-            <label>Número Ordem de Serviço</label>
+            <mat-label>Número Ordem de Serviço</mat-label>
             <input class="form-control" matInput placeholder="Número Ordem Serviço" formControlName="codigo" readonly />
           </mat-form-field>
         </div>
@@ -22,8 +22,8 @@
 
         <!-- Data Inicio -->
         <div class="col-6">
-          <mat-form-field appearance="fill" >
-            <label>Data Início do Serviço</label>
+          <mat-form-field appearance="fill">
+            <mat-label>Data Início do Serviço</mat-label>
             <input matInput [matDatepicker]="dataInicio" placeholder="Data Início" formControlName="dataInicio" />
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="dataInicio"></mat-datepicker-toggle>
@@ -32,9 +32,9 @@
         </div>
 
         <!-- Data Final -->
-        <div class="col-6" appearance="fill" >
+        <div class="col-6" appearance="fill">
           <mat-form-field>
-            <label>Data Final do Serviço</label>
+            <mat-label>Data Final do Serviço</mat-label>
             <input matInput [matDatepicker]="dataFinal" placeholder="Data Final" formControlName="dataFinal" />
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="dataFinal"></mat-datepicker-toggle>
@@ -45,22 +45,36 @@
 
       <br />
 
-      <!-- Cliente -->
       <div class="row border bg-light">
-        <mat-form-field>
-          <label>Cliente</label>
-          <input matInput placeholder="Cliente" formControlName="idCliente" />
-        </mat-form-field>
-      </div>
+        <!-- Cliente -->
+        <div class="col-6">
+          <mat-form-field>
+            <mat-mat-label>Cliente</mat-mat-label>
+            <mat-select [formControl]="clienteCtrl" placeholder="Veiculo" #singleSelectCliente>
+              <mat-option>
+                <ngx-mat-select-search [formControl]="clienteFilterCtrl"></ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let cliente of filteredClientes | async" [value]="cliente.value">
+                {{cliente.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-      <br />
-
-      <!-- Veiculo -->
-      <div class="row border bg-light">
-        <mat-form-field>
-          <label>Veículo</label>
-          <input matInput placeholder="Veiculo" formControlName="idVeiculo" />
-        </mat-form-field>
+        <!-- Veiculo -->
+        <div class="col-6">
+          <mat-form-field>
+            <mat-mat-label>Veículo</mat-mat-label>
+            <mat-select [formControl]="veiculoCtrl" placeholder="Veiculo" #singleSelectVeiculo>
+              <mat-option>
+                <ngx-mat-select-search [formControl]="veiculoFilterCtrl"></ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let veiculo of filteredVeiculos | async" [value]="veiculo.value">
+                {{veiculo.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
 
       <br />
@@ -68,11 +82,12 @@
       <!-- Acoes -->
       <div class="row">
         <div class="col-6">
-          <button mat-stroked-button color="primary" class="float-left" routerLink="/lista-ordem-servico" >Voltar</button>
+          <button mat-stroked-button color="primary" class="float-left"
+            routerLink="/lista-ordem-servico">Voltar</button>
         </div>
 
         <div class="col-6">
-          <button mat-flat-button color="primary" class="float-right">Gravar Nova Ordem se Serviço</button>
+          <button mat-flat-button color="primary" class="float-right">Gravar Alteração</button>
         </div>
       </div>
 

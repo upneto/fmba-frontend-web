@@ -23,7 +23,10 @@ import { AlertService } from './services/alert/alert-service';
 import { StateService } from './services/state/state-service';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MatNativeDateModule } from '@angular/material/core';
+
+import { MatNativeDateModule} from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 @NgModule({
@@ -46,7 +49,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     ReactiveFormsModule,
     NgbModule,
 
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule,
+    NgxMatSelectSearchModule
   ],
   providers: [ AlertService, StateService ],
   bootstrap: [AppComponent],
