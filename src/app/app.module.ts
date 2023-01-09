@@ -18,17 +18,14 @@ import { PageLoginComponent } from './pages/page-login/page-login.component';
 import { PageDetalhaOrdemServicoComponent } from './pages/page-detalha-ordem-servico/page-detalha-ordem-servico.component';
 import { PageNovaOrdemServicoComponent } from './pages/page-nova-ordem-servico/page-nova-ordem-servico.component';
 import { PageListaOrdemServicoComponent } from './pages/page-lista-ordem-servico/page-lista-ordem-servico.component';
-import { AlertComponent } from './components/alert/alert.component';
-import { AlertService } from './services/alert/alert-service';
 import { StateService } from './services/state/state-service';
 import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { MatNativeDateModule} from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { HttpClientModule } from '@angular/common/http';
-import { CustomHttpClient } from './services/custom-http-client';
 
 
 @NgModule({
@@ -39,8 +36,7 @@ import { CustomHttpClient } from './services/custom-http-client';
     PageLoginComponent,
     PageDetalhaOrdemServicoComponent,
     PageNovaOrdemServicoComponent,
-    PageListaOrdemServicoComponent,
-    AlertComponent
+    PageListaOrdemServicoComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -54,9 +50,11 @@ import { CustomHttpClient } from './services/custom-http-client';
 
     MatNativeDateModule,
     MatSelectModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+
+    NgbAlertModule
   ],
-  providers: [ AlertService, StateService, CustomHttpClient ],
+  providers: [ StateService ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

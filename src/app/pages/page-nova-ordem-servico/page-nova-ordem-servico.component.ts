@@ -7,7 +7,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/services/alert/alert-service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ReplaySubject, Subject, take, takeUntil } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
@@ -43,7 +42,6 @@ export class PageNovaOrdemServicoComponent
 
   constructor(
     private router: Router,
-    private alert: AlertService,
     private formBuilder: FormBuilder
   ) {
     this.buildForm(new OrdemServico());

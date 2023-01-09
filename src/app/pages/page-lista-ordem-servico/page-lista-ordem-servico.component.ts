@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { OrdemServico } from 'src/app/models/ordem-servico';
-import { AlertService } from 'src/app/services/alert/alert-service';
 import { StateService } from 'src/app/services/state/state-service';
 
 @Component({
@@ -25,7 +24,6 @@ export class PageListaOrdemServicoComponent implements OnInit {
   constructor(
     private router: Router,
     private stateService: StateService,
-    private alert: AlertService
   ) { }
 
   /**

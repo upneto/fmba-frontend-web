@@ -1,11 +1,14 @@
-<div layout="row" >
-    <!-- Cabecalho -->
-    <div flex class="page-header" ><app-header></app-header></div>
-    <!-- Corpo -->
-    <div flex class="page-body" >
-        <app-alert></app-alert>
-        <router-outlet></router-outlet>
-    </div>
-    <!-- Rodapé -->
-    <div flex class="page-footer" ><app-footer></app-footer></div>
+<!-- Cabecalho -->
+<div class="row page-header">
+  <app-header></app-header>
+</div>
+<!-- Corpo -->
+<div class="row">
+  <div class="container page-body">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<!-- Rodapé -->
+<div class="row page-footer">
+  <app-footer></app-footer>
 </div>

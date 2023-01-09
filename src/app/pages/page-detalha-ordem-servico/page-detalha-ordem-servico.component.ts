@@ -1,7 +1,6 @@
 import { OrdemServico } from './../../models/ordem-servico';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/services/alert/alert-service';
 import { StateService } from 'src/app/services/state/state-service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ReplaySubject, Subject, take, takeUntil } from 'rxjs';
@@ -38,7 +37,6 @@ export class PageDetalhaOrdemServicoComponent implements OnInit, AfterViewInit, 
   constructor(
     private router: Router,
     private stateService: StateService,
-    private alert: AlertService,
     private formBuilder: FormBuilder
   ) {
     this.buildForm(new OrdemServico());

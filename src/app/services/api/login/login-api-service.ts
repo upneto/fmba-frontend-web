@@ -1,20 +1,26 @@
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Login } from "src/app/models/login";
-import { ResponseApp } from "src/app/models/payloads/ResponseApp";
 import { environment } from "src/environments/environment";
-import { CustomHttpClient } from "../../custom-http-client";
+import { AbstractApiServices } from "../abstract-api-services";
 
 @Injectable({
   providedIn: 'root',
 })
-export class LoginApiService {
+export class LoginApiService extends AbstractApiServices {
 
   private urlBase = `${environment.api.login}`;
 
-  constructor(private httpClient: CustomHttpClient) {}
+  constructor(private http: HttpClient) {
+    super();
+  }
 
-  doLogin(logon: Login): Observable<ResponseApp> {
-    return this.httpClient.post(`${this.urlBase}`, logon);
+  doLogin(logon: Login): Observable<any> {
+    return this.http.post(this.urlBase, JSON.stringify(logon), { headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': this.urlBase,
+      'JWT_TOKEN': ''
+    })})
   }
 }

@@ -1,3 +1,7 @@
+<div clas="container" >
+  <ngb-alert #selfClosingAlert *ngIf="alertMessage" type="{{alertType}}" (closed)="alertMessage = ''" >{{ alertMessage }}</ngb-alert>
+</div>
+
 <div flex class="page-body">
   <mat-card class="box">
     <mat-card-header>
