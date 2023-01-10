@@ -1,5 +1,4 @@
 import { AlertType } from './../../models/payloads/Alert';
-import { ResponseApp } from './../../models/payloads/ResponseApp';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -59,7 +58,7 @@ export class PageLoginComponent extends AbstractPages implements OnInit {
       next: (data) => {
         this.isValid = true;
         console.log(JSON.stringify(data));
-        super.setStorageItem('JWT_TOKEN', data.token)
+        this.service.setStorageItem('JWT_TOKEN', data.token)
         this.router.navigateByUrl('lista-ordem-servico');
       },
       error: (error) => {

@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpHeaders } from "@angular/common/http";
 
 export abstract class AbstractApiServices {
 
@@ -7,7 +7,7 @@ export abstract class AbstractApiServices {
    * @param name chave do item
    */
   getStorageItem(name: string): string {
-    return window.localStorage.getItem(name) as string;
+    return window.localStorage.getItem(name) as string | '';
   }
 
   /**
@@ -17,5 +17,18 @@ export abstract class AbstractApiServices {
    */
   setStorageItem(name: string, value: string): void {
     window.localStorage.setItem(name, value);
+  }
+
+  /**
+   *
+   * @param url Obtem header padrão para as requisições
+   * @returns
+   */
+  getHeaders(url: string): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': url,
+      'JWT_TOKEN': this.getStorageItem('JWT_TOKEN')
+    });
   }
 }

@@ -1,15 +1,18 @@
+import { OrdemServicoApiService } from './../../services/api/ordem-servico/ordem-servico-api-service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { OrdemServico } from 'src/app/models/ordem-servico';
 import { StateService } from 'src/app/services/state/state-service';
+import { AbstractPages } from '../AbstractPages';
+import { AlertType } from 'src/app/models/payloads/Alert';
 
 @Component({
   selector: 'app-page-lista-ordem-servico',
   templateUrl: './page-lista-ordem-servico.component.html',
   styleUrls: ['./page-lista-ordem-servico.component.css'],
 })
-export class PageListaOrdemServicoComponent implements OnInit {
+export class PageListaOrdemServicoComponent extends AbstractPages implements OnInit {
   public displayedColumns: string[] = [
     'codigo',
     'nomeCliente',
@@ -24,7 +27,9 @@ export class PageListaOrdemServicoComponent implements OnInit {
   constructor(
     private router: Router,
     private stateService: StateService,
-  ) { }
+    private service: OrdemServicoApiService) {
+    super();
+  }
 
   /**
    * -----------------------------------------
@@ -34,39 +39,29 @@ export class PageListaOrdemServicoComponent implements OnInit {
 
   ngOnInit(): void {
     // Pesquisar lista Ordens de serviço
-    let data = this.findAll();
-
-    // Atribui lista à tabela
-    this.dataSource.data = data;
+    this.findAll();
 
     // Cria filtros para a lista
     this.filterSelectObj.filter((o: any) => {
-      o.options = this.getFilterObject(data, o.columnProp);
+      o.options = this.getFilterObject(this.dataSource.data, o.columnProp);
     });
   }
 
   findAll(): OrdemServico[] {
-    const data: OrdemServico[] = [
-      {
-        codigo: 123456789,
-        nomeCliente: 'Luiz inácio lula da silva',
-        veiculo: 'Brasilia',
-        placa: 'XPTO1234',
+
+    let list: OrdemServico[] = [];
+
+    this.service.doFindAll().subscribe({
+      next: (data) => {
+        this.dataSource.data = data;
       },
-      {
-        codigo: 987654321,
-        nomeCliente: 'Luiz inácio lula da silva',
-        veiculo: 'Fusca',
-        placa: 'XPTO4563',
+      error: (error) => {
+        console.error('There was an error!', error);
+        this.showMessage('Não foi possível efetuar a consulta!', AlertType.error);
       },
-      {
-        codigo: 852963147,
-        nomeCliente: 'Luiz inácio lula da silva',
-        veiculo: 'Ferrari',
-        placa: 'XPTO9876',
-      },
-    ];
-    return data;
+    });
+
+    return list;
   }
 
   /**

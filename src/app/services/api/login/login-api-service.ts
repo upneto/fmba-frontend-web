@@ -17,10 +17,9 @@ export class LoginApiService extends AbstractApiServices {
   }
 
   doLogin(logon: Login): Observable<any> {
-    return this.http.post(this.urlBase, JSON.stringify(logon), { headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': this.urlBase,
-      'JWT_TOKEN': ''
-    })})
+    return this.http.post(
+      this.urlBase,
+      JSON.stringify(logon),
+      { headers: super.getHeaders(this.urlBase) as HttpHeaders });
   }
 }
