@@ -1,10 +1,10 @@
 export class OrdemServico {
-  codigo?: number;
-	dataInicio?: Date;
-	dataFinal?: Date;
-	idCliente?: number;
-	nomeCliente?: string;
-	idVeiculo?: number;
-	veiculo?: string;
-	placa?: string;
+  codigo: number = 0;
+	dataInicio: string = '';
+	dataFinal: string = '';
+	idCliente: number = 0;
+	nomeCliente: string = '';
+	idVeiculo: number = 0;
+	veiculo: string = '';
+	placa: string = '';
 }

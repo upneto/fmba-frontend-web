@@ -6,6 +6,18 @@ import { debounceTime, Subject } from 'rxjs';
   template: '',
 })
 export abstract class AbstractPages {
+
+  convertToDate(data: string): any {
+    if(data) {
+      let dateParts = data.split("/");
+      const day = Number(dateParts[0]);
+      const mouth = Number(dateParts[1]);
+      const year = Number(dateParts[2]);
+      return new Date(mouth, day, year);
+    }
+    return null;
+  }
+
   /**
    * ---------------------------------------------------------------------------
    *

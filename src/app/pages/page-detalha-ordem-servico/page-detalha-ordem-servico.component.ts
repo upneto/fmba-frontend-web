@@ -12,10 +12,8 @@ import { AlertType } from 'src/app/models/payloads/Alert';
   templateUrl: './page-detalha-ordem-servico.component.html',
   styleUrls: ['./page-detalha-ordem-servico.component.css'],
 })
-export class PageDetalhaOrdemServicoComponent
-  extends AbstractPages
-  implements OnInit
-{
+export class PageDetalhaOrdemServicoComponent extends AbstractPages implements OnInit {
+
   public selectedRow!: OrdemServico;
   public formOrdemServico!: FormGroup;
 
@@ -64,11 +62,11 @@ export class PageDetalhaOrdemServicoComponent
     this.formOrdemServico = this.formBuilder.group({
       codigo: new FormControl({ value: ordemServico.codigo, disabled: true }),
       dataInicio: new FormControl({
-        value: ordemServico.dataInicio,
+        value: super.convertToDate(ordemServico.dataInicio),
         disabled: false,
       }),
       dataFinal: new FormControl({
-        value: ordemServico.dataFinal,
+        value: super.convertToDate(ordemServico.dataFinal),
         disabled: false,
       }),
       idCliente: new FormControl({
@@ -137,5 +135,16 @@ export class PageDetalhaOrdemServicoComponent
    * ---------------------------------------------------------------
    */
 
-  update(): void {}
+  update(): void {
+    const ordemServico = this.formOrdemServico.value;
+    this.service.doUpdate(ordemServico).subscribe({
+      next: (data) => {
+        this.showMessage('Operação realizada com sucesso!', AlertType.info);
+      },
+      error: (error) => {
+        console.error('There was an error!', error);
+        this.showMessage('Não foi possível efetuar a operação!', AlertType.error);
+      },
+    });
+  }
 }

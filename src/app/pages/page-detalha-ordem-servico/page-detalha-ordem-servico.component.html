@@ -28,7 +28,7 @@
         <div class="col-6">
           <mat-form-field appearance="fill">
             <mat-label>Data Início do Serviço</mat-label>
-            <input matInput [matDatepicker]="dataInicio" placeholder="Data Início" formControlName="dataInicio" />
+            <input matInput [matDatepicker]="dataInicio" placeholder="Data Início" formControlName="dataInicio" name="dataInicio" />
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="dataInicio"></mat-datepicker-toggle>
             <mat-datepicker #dataInicio></mat-datepicker>
@@ -39,7 +39,7 @@
         <div class="col-6" appearance="fill">
           <mat-form-field>
             <mat-label>Data Final do Serviço</mat-label>
-            <input matInput [matDatepicker]="dataFinal" placeholder="Data Final" formControlName="dataFinal" />
+            <input matInput [matDatepicker]="dataFinal" placeholder="Data Final" formControlName="dataFinal" name="dataFinal" />
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="dataFinal"></mat-datepicker-toggle>
             <mat-datepicker #dataFinal></mat-datepicker>
