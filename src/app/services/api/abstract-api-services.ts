@@ -1,4 +1,5 @@
 import { HttpHeaders } from "@angular/common/http";
+import { environment } from "src/environments/environment";
 
 export abstract class AbstractApiServices {
 
@@ -27,7 +28,7 @@ export abstract class AbstractApiServices {
   getHeaders(url: string): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': url,
+      'Access-Control-Allow-Origin': `${environment.base}`,
       'JWT_TOKEN': this.getStorageItem('JWT_TOKEN')
     });
   }

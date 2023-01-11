@@ -2,6 +2,7 @@
 const URL_BASE = 'https://fmba-backend-gateway.herokuapp.com';
 
 export const environment = {
+  base: URL_BASE,
   api: {
     login: URL_BASE + '/login',
     ordemServico: URL_BASE + '/api/ordem_servico',
