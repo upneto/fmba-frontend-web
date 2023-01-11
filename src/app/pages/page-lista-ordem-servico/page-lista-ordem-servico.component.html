@@ -1,15 +1,15 @@
 <div class="container">
 
   <div class="row">
-    <ngb-alert #selfClosingAlert *ngIf="alertMessage" type="{{alertType}}" (closed)="alertMessage = ''" >{{ alertMessage }}</ngb-alert>
-  </div>
-
-  <div class="row">
     <div class="column">
       <a mat-flat-button routerLink="/lista-ordem-servico">Lista de Ordens de Serviços</a>
       /
       <a mat-flat-button routerLink="/detalhe-ordem-servico">Detalhe Ordem de Serviço</a>
     </div>
+  </div>
+
+  <div class="row">
+    <ngb-alert #selfClosingAlert *ngIf="alertMessage" type="{{alertType}}" (closed)="alertMessage = ''" >{{ alertMessage }}</ngb-alert>
   </div>
 
   <div class="row">

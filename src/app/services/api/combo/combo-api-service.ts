@@ -1,23 +1,31 @@
+import { AbstractApiServices } from 'src/app/services/api/abstract-api-services';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { ResponseApp } from "src/app/models/payloads/ResponseApp";
 import { environment } from "src/environments/environment";
-import { CustomHttpClient } from "../../custom-http-client";
+import { Injectable } from '@angular/core';
 
-export class ComboApiService {
+@Injectable({
+  providedIn: 'root',
+})
+export class ComboApiService extends AbstractApiServices {
 
-  private urlClienteBase!: string;
-  private urlVeiculoBase!: string;
+  private urlClienteBase = `${environment.api.cliente}`;
+  private urlVeiculoBase = `${environment.api.veiculo}`;
 
-  constructor(private httpClient: CustomHttpClient) {
-    this.urlClienteBase = `${environment.api.cliente}`;
-    this.urlVeiculoBase = `${environment.api.veiculo}`;
+  constructor(private http: HttpClient) {
+    super();
   }
 
-  doFindAllClientes(): Observable<ResponseApp> {
-    return this.httpClient.get(`${this.urlClienteBase}`);
+  doFindAllClientes(): Observable<any> {
+    return this.http.get(
+      `${this.urlClienteBase}`,
+      { headers: super.getHeaders(this.urlClienteBase) as HttpHeaders });
   }
 
-  doFindAllVeiculos(): Observable<ResponseApp> {
-    return this.httpClient.get(`${this.urlVeiculoBase}`);
+  doFindAllVeiculos(): Observable<any> {
+    return this.http.get(
+      `${this.urlVeiculoBase}`,
+      { headers: super.getHeaders(this.urlVeiculoBase) as HttpHeaders });
   }
 }

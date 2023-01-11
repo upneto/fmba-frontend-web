@@ -58,7 +58,7 @@ export class PageListaOrdemServicoComponent extends AbstractPages implements OnI
       error: (error) => {
         console.error('There was an error!', error);
         this.showMessage('Não foi possível efetuar a consulta!', AlertType.error);
-      },
+      }
     });
 
     return list;

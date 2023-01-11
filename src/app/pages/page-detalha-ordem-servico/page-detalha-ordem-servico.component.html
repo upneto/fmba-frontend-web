@@ -8,6 +8,10 @@
   </div>
 
   <div class="row">
+    <ngb-alert #selfClosingAlert *ngIf="alertMessage" type="{{alertType}}" (closed)="alertMessage = ''" >{{ alertMessage }}</ngb-alert>
+  </div>
+
+  <div class="row">
     <form class="form" fxLayout="column" [formGroup]="formOrdemServico">
 
       <div class="row border bg-light">
@@ -50,14 +54,12 @@
         <div class="col-6">
           <mat-form-field>
             <mat-mat-label>Cliente</mat-mat-label>
-            <mat-select [formControl]="clienteCtrl" placeholder="Veiculo" #singleSelectCliente>
-              <mat-option>
-                <ngx-mat-select-search [formControl]="clienteFilterCtrl"></ngx-mat-select-search>
-              </mat-option>
-              <mat-option *ngFor="let cliente of filteredClientes | async" [value]="cliente.value">
-                {{cliente.label}}
-              </mat-option>
-            </mat-select>
+            <select matNativeControl formControlName="idCliente" name="cliente">
+              <option value="" selected ></option>
+              <option *ngFor="let cliente of comboCliente" [value]="cliente.id">
+                {{cliente.nome}}
+              </option>
+            </select>
           </mat-form-field>
         </div>
 
@@ -65,14 +67,12 @@
         <div class="col-6">
           <mat-form-field>
             <mat-mat-label>Veículo</mat-mat-label>
-            <mat-select [formControl]="veiculoCtrl" placeholder="Veiculo" #singleSelectVeiculo>
-              <mat-option>
-                <ngx-mat-select-search [formControl]="veiculoFilterCtrl"></ngx-mat-select-search>
-              </mat-option>
-              <mat-option *ngFor="let veiculo of filteredVeiculos | async" [value]="veiculo.value">
-                {{veiculo.label}}
-              </mat-option>
-            </mat-select>
+            <select matNativeControl formControlName="idVeiculo" name="veiculo">
+              <option value="" selected ></option>
+              <option *ngFor="let veiculo of comboVeiculo" [value]="veiculo.id">
+                {{veiculo.modelo}}
+              </option>
+            </select>
           </mat-form-field>
         </div>
       </div>

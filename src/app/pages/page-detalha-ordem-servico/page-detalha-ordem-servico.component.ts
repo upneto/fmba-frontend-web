@@ -1,44 +1,34 @@
+import { ComboApiService } from './../../services/api/combo/combo-api-service';
+import { OrdemServicoApiService } from './../../services/api/ordem-servico/ordem-servico-api-service';
 import { OrdemServico } from './../../models/ordem-servico';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { StateService } from 'src/app/services/state/state-service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ReplaySubject, Subject, take, takeUntil } from 'rxjs';
-import { MatSelect } from '@angular/material/select';
-import { Combo } from 'src/app/models/payloads/Combo';
+import { AbstractPages } from '../AbstractPages';
+import { AlertType } from 'src/app/models/payloads/Alert';
 
 @Component({
   selector: 'app-page-detalha-ordem-servico',
   templateUrl: './page-detalha-ordem-servico.component.html',
   styleUrls: ['./page-detalha-ordem-servico.component.css'],
 })
-export class PageDetalhaOrdemServicoComponent implements OnInit, AfterViewInit, OnDestroy {
-
+export class PageDetalhaOrdemServicoComponent
+  extends AbstractPages
+  implements OnInit
+{
   public selectedRow!: OrdemServico;
   public formOrdemServico!: FormGroup;
-  public isValid: boolean = true;
 
-  // Veiculo
-  public comboVeiculo!: Combo[];
-  public veiculoCtrl: FormControl<Combo> = new FormControl<any>(null);
-  public veiculoFilterCtrl: FormControl<string> = new FormControl<any>('');
-  public filteredVeiculos: ReplaySubject<Combo[]> = new ReplaySubject<Combo[]>(1);
-
-  // Cliente
-  public comboCliente!: Combo[];
-  public clienteCtrl: FormControl<Combo> = new FormControl<any>(null);
-  public clienteFilterCtrl: FormControl<string> = new FormControl<any>('');
-  public filteredClientes: ReplaySubject<Combo[]> = new ReplaySubject<Combo[]>(1);
-
-  @ViewChild('singleSelectVeiculo', { static: true }) singleSelectVeiculo!: MatSelect;
-  @ViewChild('singleSelectCliente', { static: true }) singleSelectCliente!: MatSelect;
-  protected _onDestroy = new Subject<void>();
+  // Combos
+  public comboVeiculo: any;
+  public comboCliente: any;
 
   constructor(
-    private router: Router,
     private stateService: StateService,
-    private formBuilder: FormBuilder
-  ) {
+    private formBuilder: FormBuilder,
+    private service: OrdemServicoApiService,
+    private comboService: ComboApiService ) {
+    super();
     this.buildForm(new OrdemServico());
   }
 
@@ -52,11 +42,8 @@ export class PageDetalhaOrdemServicoComponent implements OnInit, AfterViewInit, 
     this.buildForm(data);
 
     // Inicializa os combos
-    let comboVeiculo = this.callVeiculoService();
-    this.buildComboVeiculo(comboVeiculo);
-
-    let comboCliente = this.callClienteService();
-    this.buildComboCliente(comboCliente);
+    this.callVeiculoService();
+    this.callClienteService();
   }
 
   /**
@@ -68,8 +55,9 @@ export class PageDetalhaOrdemServicoComponent implements OnInit, AfterViewInit, 
    */
 
   callDetailService(ordemServico: OrdemServico): OrdemServico {
-    // Implementar
-    return new OrdemServico();
+    // Implementar chamada API de detalhe se precisar!!!
+    console.log(JSON.stringify(ordemServico));
+    return ordemServico;
   }
 
   buildForm(ordemServico: OrdemServico): void {
@@ -111,77 +99,34 @@ export class PageDetalhaOrdemServicoComponent implements OnInit, AfterViewInit, 
    * ---------------------------------------------------------------
    */
 
-  callVeiculoService() : Combo[] {
-    let combo: any[] = [
-      { value: '1', label: 'Fusca' },
-      { value: '2', label: 'Mercedes' },
-      { value: '3', label: 'Ford Escort' }
-    ];
-    return combo;
+  callVeiculoService(): void {
+    this.comboService.doFindAllVeiculos().subscribe({
+      next: (data) => {
+        this.comboVeiculo = data;
+      },
+      error: (error) => {
+        console.error('There was an error!', error);
+        this.showMessage(
+          'Não foi possível efetuar a consulta por veiculos!',
+          AlertType.error
+        );
+      },
+    });
   }
 
-  callClienteService() : Combo[] {
-    let combo: any[] = [
-      { value: '1', label: 'Otavianos pereira' },
-      { value: '2', label: 'Jirumundo Otaku' }
-    ];
-    return combo;
-  }
-
-  buildComboVeiculo(combo: Combo[]) : void {
-     this.veiculoCtrl.setValue(combo[10]);
-     this.filteredVeiculos.next(combo.slice());
-     this.veiculoFilterCtrl.valueChanges
-       .pipe(takeUntil(this._onDestroy))
-       .subscribe(() => {
-         this.filterCombo(combo, this.veiculoFilterCtrl, this.filteredVeiculos);
-       });
-  }
-
-  buildComboCliente(combo: Combo[]) : void {
-    this.clienteCtrl.setValue(combo[10]);
-    this.filteredClientes.next(combo.slice());
-    this.clienteFilterCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterCombo(combo, this.clienteFilterCtrl, this.filteredClientes);
-      });
- }
-
-  ngAfterViewInit() {
-    this.setInitialFilterValue(this.filteredVeiculos, this.singleSelectVeiculo);
-  }
-
-  ngOnDestroy() {
-    this._onDestroy.next();
-    this._onDestroy.complete();
-  }
-
-  setInitialFilterValue(filtered: ReplaySubject<Combo[]>, singleSelect: MatSelect) {
-    filtered
-      .pipe(take(1), takeUntil(this._onDestroy))
-      .subscribe(() => {
-        singleSelect.compareWith = (a: Combo, b: Combo) => a && b && a.value === b.value;
-      });
-  }
-
-  filterCombo(combo: Combo[], filterCtrl: FormControl<string>, filteredCombo: ReplaySubject<Combo[]>) {
-    if (!combo) {
-      return;
-    }
-
-    let search = filterCtrl.value;
-    if (!search) {
-      filteredCombo.next(combo.slice());
-      return;
-    }
-    else {
-      search = search.toLowerCase();
-    }
-
-    filteredCombo.next(
-      combo.filter(combo => combo.label.toLowerCase().indexOf(search) > -1)
-    );
+  callClienteService(): void {
+    this.comboService.doFindAllClientes().subscribe({
+      next: (data) => {
+        this.comboCliente = data;
+      },
+      error: (error) => {
+        console.error('There was an error!', error);
+        this.showMessage(
+          'Não foi possível efetuar a consulta por clientes!',
+          AlertType.error
+        );
+      },
+    });
   }
 
   /**
@@ -193,6 +138,4 @@ export class PageDetalhaOrdemServicoComponent implements OnInit, AfterViewInit, 
    */
 
   update(): void {}
-
-
 }
