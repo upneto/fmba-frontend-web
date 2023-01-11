@@ -17,6 +17,10 @@ export class LoginApiService extends AbstractApiServices {
   }
 
   doLogin(logon: Login): Observable<any> {
+
+    console.log("LOGON => " + JSON.stringify(logon));
+    console.log("URL   => " + this.urlBase);
+
     return this.http.post(
       this.urlBase,
       JSON.stringify(logon),

@@ -56,10 +56,12 @@ export class PageLoginComponent extends AbstractPages implements OnInit {
 
     this.service.doLogin(logon).subscribe({
       next: (data) => {
-        this.isValid = true;
-        console.log(JSON.stringify(data));
-        this.service.setStorageItem('JWT_TOKEN', data.token)
-        this.router.navigateByUrl('lista-ordem-servico');
+        if(data) {
+          console.log(JSON.stringify(data));
+          this.isValid = true;
+          this.service.setStorageItem('JWT_TOKEN', data.token)
+          this.router.navigateByUrl('lista-ordem-servico');
+        }
       },
       error: (error) => {
         this.isValid = false;
