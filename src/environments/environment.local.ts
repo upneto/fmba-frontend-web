@@ -2,6 +2,7 @@
 const URL_BASE = 'http://localhost:9080';
 
 export const environment = {
+  production: false,
   base: URL_BASE,
   api: {
     login: URL_BASE + '/login',
