@@ -1,11 +1,12 @@
-import { OrdemServicoApiService } from './../../services/api/ordem-servico/ordem-servico-api-service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { OrdemServico } from 'src/app/models/ordem-servico';
-import { StateService } from 'src/app/services/state/state-service';
 import { AbstractPages } from '../AbstractPages';
 import { AlertType } from 'src/app/models/payloads/Alert';
+import { StateService } from 'src/app/services/state/state-service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-page-lista-ordem-servico',
@@ -13,6 +14,9 @@ import { AlertType } from 'src/app/models/payloads/Alert';
   styleUrls: ['./page-lista-ordem-servico.component.css'],
 })
 export class PageListaOrdemServicoComponent extends AbstractPages implements OnInit {
+
+  private urlBase = `${environment.api.ordemServico}`;
+
   public displayedColumns: string[] = [
     'codigo',
     'nomeCliente',
@@ -27,7 +31,7 @@ export class PageListaOrdemServicoComponent extends AbstractPages implements OnI
   constructor(
     private router: Router,
     private stateService: StateService,
-    private service: OrdemServicoApiService) {
+    private http: HttpClient) {
     super();
   }
 
@@ -51,8 +55,8 @@ export class PageListaOrdemServicoComponent extends AbstractPages implements OnI
 
     let list: OrdemServico[] = [];
 
-    this.service.doFindAll().subscribe({
-      next: (data) => {
+    this.http.get(`${this.urlBase}`, { headers: super.getHeaders() }).subscribe({
+      next: (data: any) => {
         this.dataSource.data = data;
       },
       error: (error) => {

@@ -1,10 +1,13 @@
+import { ResponseApp } from 'src/app/models/payloads/ResponseApp';
 import { AlertType } from './../../models/payloads/Alert';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Login } from 'src/app/models/login';
-import { LoginApiService } from 'src/app/services/api/login/login-api-service';
 import { AbstractPages } from '../AbstractPages';
+
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-page-login',
@@ -13,10 +16,14 @@ import { AbstractPages } from '../AbstractPages';
 })
 export class PageLoginComponent extends AbstractPages implements OnInit {
 
+  private urlBase = `${environment.api.login}`;
+
   public formLogin!: FormGroup;
   public isValid: boolean = true;
 
-  constructor(private router: Router, private service: LoginApiService) {
+  constructor(
+    private router: Router,
+    private http: HttpClient) {
     super();
   }
 
@@ -40,8 +47,8 @@ export class PageLoginComponent extends AbstractPages implements OnInit {
   }
 
   doLogin(): void {
-    console.log('Executou login! ' + this.formLogin.value);
     if (this.formLogin.valid) {
+      console.log('Executou login! ' + this.formLogin.value);
       this.callService();
     } else {
       this.isValid = false;
@@ -50,16 +57,17 @@ export class PageLoginComponent extends AbstractPages implements OnInit {
   }
 
   callService(): void {
-    const logon: Login = new Login();
-    logon.usuario = this.formLogin.value.usuario;
-    logon.senha = this.formLogin.value.senha;
+    const logon = JSON.stringify(this.formLogin.value);
 
-    this.service.doLogin(logon).subscribe({
-      next: (data) => {
+    console.log("LOGON => " + logon);
+    console.log("URL   => " + this.urlBase);
+
+    this.http.post(this.urlBase, logon, { headers: super.getHeaders() }).subscribe({
+      next: (data: any) => {
         if(data) {
           console.log(JSON.stringify(data));
           this.isValid = true;
-          this.service.setStorageItem('JWT_TOKEN', data.token)
+          super.setStorageItem('JWT_TOKEN', data.token)
           this.router.navigateByUrl('lista-ordem-servico');
         }
       },

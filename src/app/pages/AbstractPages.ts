@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, Subject } from 'rxjs';
@@ -6,6 +7,15 @@ import { debounceTime, Subject } from 'rxjs';
   template: '',
 })
 export abstract class AbstractPages {
+
+  /**
+   * ---------------------------------------------------------------------------
+   *
+   *        Converters Util
+   *
+   * ---------------------------------------------------------------------------
+   */
+
 
   convertToDate(data: string): any {
     if(data) {
@@ -45,6 +55,46 @@ export abstract class AbstractPages {
       if (this.selfClosingAlert) {
         this.selfClosingAlert.close();
       }
+    });
+  }
+
+  /**
+   * ---------------------------------------------------------------------------
+   *
+   *        HTTP Utils
+   *
+   * ---------------------------------------------------------------------------
+   */
+
+
+  /**
+   * Retorna item do local storage
+   * @param name chave do item
+   */
+  getStorageItem(name: string): string {
+    return window.localStorage.getItem(name) as string | '';
+  }
+
+  /**
+   * Adiciona item no local storage
+   * @param name chave do item
+   * @param value valor do item
+   */
+  setStorageItem(name: string, value: string): void {
+    window.localStorage.setItem(name, value);
+  }
+
+  /**
+   *
+   * @param url Obtem header padrão para as requisições
+   * @returns
+   */
+  getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'https://fmba-frontend-web.herokuapp.com',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+      'JWT_TOKEN': this.getStorageItem('JWT_TOKEN')
     });
   }
 }

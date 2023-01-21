@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AbstractPages } from '../AbstractPages';
 import { AlertType } from 'src/app/models/payloads/Alert';
-import { ComboApiService } from 'src/app/services/api/combo/combo-api-service';
-import { OrdemServicoApiService } from 'src/app/services/api/ordem-servico/ordem-servico-api-service';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-page-nova-ordem-servico',
@@ -12,6 +12,10 @@ import { OrdemServicoApiService } from 'src/app/services/api/ordem-servico/ordem
   styleUrls: ['./page-nova-ordem-servico.component.css'],
 })
 export class PageNovaOrdemServicoComponent extends AbstractPages implements OnInit {
+
+  private urlClienteBase = `${environment.api.cliente}`;
+  private urlVeiculoBase = `${environment.api.veiculo}`;
+  private urlBase = `${environment.api.ordemServico}`;
 
   public selectedRow!: OrdemServico;
   public formOrdemServico!: FormGroup;
@@ -22,8 +26,7 @@ export class PageNovaOrdemServicoComponent extends AbstractPages implements OnIn
 
   constructor(
     private formBuilder: FormBuilder,
-    private service: OrdemServicoApiService,
-    private comboService: ComboApiService ) {
+    private http: HttpClient) {
     super();
     this.buildForm(new OrdemServico());
   }
@@ -91,8 +94,8 @@ export class PageNovaOrdemServicoComponent extends AbstractPages implements OnIn
    */
 
   callVeiculoService(): void {
-    this.comboService.doFindAllVeiculos().subscribe({
-      next: (data) => {
+    this.http.get(`${this.urlVeiculoBase}`, { headers: super.getHeaders() }).subscribe({
+      next: (data: any) => {
         this.comboVeiculo = data;
       },
       error: (error) => {
@@ -106,8 +109,8 @@ export class PageNovaOrdemServicoComponent extends AbstractPages implements OnIn
   }
 
   callClienteService(): void {
-    this.comboService.doFindAllClientes().subscribe({
-      next: (data) => {
+    this.http.get(`${this.urlClienteBase}`, { headers: super.getHeaders() }).subscribe({
+      next: (data: any) => {
         this.comboCliente = data;
       },
       error: (error) => {
@@ -129,8 +132,8 @@ export class PageNovaOrdemServicoComponent extends AbstractPages implements OnIn
    */
 
   insert(): void {
-    const ordemServico = this.formOrdemServico.value;
-    this.service.doInsert(ordemServico).subscribe({
+    const ordemServico = JSON.stringify(this.formOrdemServico.value);
+    this.http.post(`${this.urlBase}`, ordemServico, { headers: super.getHeaders() }).subscribe({
       next: (data) => {
         this.showMessage('Operação realizada com sucesso!', AlertType.info);
       },

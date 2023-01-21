@@ -1,11 +1,11 @@
-import { ComboApiService } from './../../services/api/combo/combo-api-service';
-import { OrdemServicoApiService } from './../../services/api/ordem-servico/ordem-servico-api-service';
 import { OrdemServico } from './../../models/ordem-servico';
 import { Component, OnInit } from '@angular/core';
 import { StateService } from 'src/app/services/state/state-service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AbstractPages } from '../AbstractPages';
 import { AlertType } from 'src/app/models/payloads/Alert';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-page-detalha-ordem-servico',
@@ -13,6 +13,10 @@ import { AlertType } from 'src/app/models/payloads/Alert';
   styleUrls: ['./page-detalha-ordem-servico.component.css'],
 })
 export class PageDetalhaOrdemServicoComponent extends AbstractPages implements OnInit {
+
+  private urlClienteBase = `${environment.api.cliente}`;
+  private urlVeiculoBase = `${environment.api.veiculo}`;
+  private urlBase = `${environment.api.ordemServico}`;
 
   public selectedRow!: OrdemServico;
   public formOrdemServico!: FormGroup;
@@ -22,10 +26,10 @@ export class PageDetalhaOrdemServicoComponent extends AbstractPages implements O
   public comboCliente: any;
 
   constructor(
-    private stateService: StateService,
     private formBuilder: FormBuilder,
-    private service: OrdemServicoApiService,
-    private comboService: ComboApiService ) {
+    private stateService: StateService,
+    private http: HttpClient
+  ) {
     super();
     this.buildForm(new OrdemServico());
   }
@@ -98,8 +102,8 @@ export class PageDetalhaOrdemServicoComponent extends AbstractPages implements O
    */
 
   callVeiculoService(): void {
-    this.comboService.doFindAllVeiculos().subscribe({
-      next: (data) => {
+    this.http.get(`${this.urlVeiculoBase}`, { headers: super.getHeaders() }).subscribe({
+      next: (data: any) => {
         this.comboVeiculo = data;
       },
       error: (error) => {
@@ -113,8 +117,8 @@ export class PageDetalhaOrdemServicoComponent extends AbstractPages implements O
   }
 
   callClienteService(): void {
-    this.comboService.doFindAllClientes().subscribe({
-      next: (data) => {
+    this.http.get(`${this.urlClienteBase}`, { headers: super.getHeaders() }).subscribe({
+      next: (data: any) => {
         this.comboCliente = data;
       },
       error: (error) => {
@@ -136,9 +140,9 @@ export class PageDetalhaOrdemServicoComponent extends AbstractPages implements O
    */
 
   update(): void {
-    const ordemServico = this.formOrdemServico.value;
-    this.service.doUpdate(ordemServico).subscribe({
-      next: (data) => {
+    const ordemServico = JSON.stringify(this.formOrdemServico.value);
+    this.http.put(`${this.urlBase}`, ordemServico, { headers: super.getHeaders() }).subscribe({
+      next: (data: any) => {
         this.showMessage('Operação realizada com sucesso!', AlertType.info);
       },
       error: (error) => {
