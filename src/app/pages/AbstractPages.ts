@@ -72,7 +72,7 @@ export abstract class AbstractPages {
    * @param name chave do item
    */
   getStorageItem(name: string): string {
-    return window.localStorage.getItem(name) as string | '';
+    return window.localStorage.getItem(name) as string || '';
   }
 
   /**
@@ -90,11 +90,12 @@ export abstract class AbstractPages {
    * @returns
    */
   getHeaders(): HttpHeaders {
+    const TOKEN = this.getStorageItem('JWT_TOKEN');
     return new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': 'https://fmba-frontend-web.herokuapp.com',
       'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-      'JWT_TOKEN': this.getStorageItem('JWT_TOKEN')
+      'JWT_TOKEN': TOKEN
     });
   }
 }

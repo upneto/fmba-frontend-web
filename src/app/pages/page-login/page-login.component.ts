@@ -16,14 +16,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class PageLoginComponent extends AbstractPages implements OnInit {
 
-  private urlBase = `${environment.api.login}`;
+  private urlBase = `${environment.api.login}` || 'http://localhost:9080';
 
   public formLogin!: FormGroup;
   public isValid: boolean = true;
 
   constructor(
     private router: Router,
-    private http: HttpClient) {
+    private httpClient: HttpClient) {
     super();
   }
 
@@ -61,8 +61,9 @@ export class PageLoginComponent extends AbstractPages implements OnInit {
 
     console.log("LOGON => " + logon);
     console.log("URL   => " + this.urlBase);
+    console.log("HTTP IS ACTIVE   => " + this.httpClient != null);
 
-    this.http.post(this.urlBase, logon, { headers: super.getHeaders() }).subscribe({
+    this.httpClient.post(this.urlBase, logon, { headers: super.getHeaders() }).subscribe({
       next: (data: any) => {
         if(data) {
           console.log(JSON.stringify(data));
