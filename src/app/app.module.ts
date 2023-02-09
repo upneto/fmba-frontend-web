@@ -25,7 +25,9 @@ import { NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatNativeDateModule} from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { PageExternalComponent } from './pages/page-external/page-external.component';
+import { LoadingInterceptor } from './interceptos/loading.interceptor';
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { HttpClientModule } from '@angular/common/http';
     PageLoginComponent,
     PageDetalhaOrdemServicoComponent,
     PageNovaOrdemServicoComponent,
-    PageListaOrdemServicoComponent
+    PageListaOrdemServicoComponent,
+    PageExternalComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -54,7 +57,10 @@ import { HttpClientModule } from '@angular/common/http';
 
     NgbAlertModule
   ],
-  providers: [ StateService ],
+  providers: [
+    StateService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
